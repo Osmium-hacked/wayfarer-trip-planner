@@ -173,14 +173,27 @@ tests/                         Vitest: parser, normalizer, reducer (45 tests)
 
 ## AI usage note
 
-> ✏️ **Fill this in honestly before submitting.** The assignment says honesty here counts in your favour.
+I built this with **Claude Code** (Anthropic's AI coding agent, Claude Opus 5.5) and I'm being upfront about how much
+it did. I gave it the assignment PDF and asked for a trip planner with polished UI/UX. From there the agent:
 
-This project was built with help from an AI coding assistant (Claude Code). It was used for:
-- _e.g. scaffolding the project and components, drafting the CSS, writing the partial-JSON parser and tests…_
+- Chose the architecture (Vite + React frontend, Express proxy, plain `fetch` streaming instead of an SDK) and wrote
+  the code: server, prompts, parser, normalizer, reducer, hooks, components, CSS and the 45 unit tests.
+- Ran the app in a browser and checked every failure mode through the built-in simulator: auto-repair, unrecoverable
+  JSON, wrong shape, not-a-trip, 503, messy data, the 30 s stall timeout, and a cancel-then-resubmit race. It also
+  tested drag-and-drop across days, keyboard reordering, delete + undo, refinement success and failure, and the
+  layout at 375 px in light and dark themes.
+- Fixed the bugs that testing found: an API/Vite port clash, focus being lost after deleting a stop, a stray separator
+  in stop details, the mode badge clipping on mobile, and refinements resetting packing-list checkmarks.
+- Split the work into the commit history in this repo. Every commit carries a `Co-Authored-By: Claude` trailer.
 
-What I did myself / reviewed:
-- _e.g. chose the architecture, reviewed and understood every file, tested every failure mode by hand…_
+My part was directing the work, deciding what to keep, and going through the code so I can explain and extend it in
+the interview.
+
+**Not yet verified:** all testing used the built-in demo generator. The live-provider path (`server/llm.js`) has not
+been run against a real API key yet.
 
 ## Time spent
 
-> ✏️ _Fill in: e.g. ~X hours total (breakdown)._
+About **45 minutes** of build and browser-testing time in one Claude Code session on 2026-11-09, plus a short session
+on 2026-11-10 to set up the git history and publish the repo. That is well under the 8-hour budget. I spent the time
+saved on breadth: streaming, refinement, saved trips and theming, which are the stretch goals.
